@@ -3,9 +3,9 @@ import requests
 import base64
 import os
 
-input_dir = "../html"
+input_dir = "html"
 # f_output = open("include/esp32_socket_webpage.h", "w")
-f_output = open("esp32_socket_webpage.h", "w")
+f_output = open("src/esp32_socket_webpage.h", "w")
 f_output.write("#ifndef ESP32_SOCKET_WEBPAGE_H\n#define ESP32_SOCKET_WEBPAGE_H\n\n")
 f_output.write("#ifndef Arduino_h\n  #include <Arduino.h>\n#endif\n\n")
 
@@ -37,20 +37,20 @@ def aschii2Hex(text): # TODO fix unkown byte at end of string
         x += 1
     return output_str
 
-# def minify_js(input_file):
-#     url = URL_minify_js
-#     data = {'input': open(input_file, 'rb').read()}
-#     return requests.post(url, data=data).text
+def minify_js(input_file):
+    url = URL_minify_js
+    data = {'input': open(input_file, 'rb').read()}
+    return requests.post(url, data=data).text
 
 def minify_html(input_file):
     url = URL_minify_html
     data = {'input': open(input_file, 'rb').read()}
     return requests.post(url, data=data).text
 
-# def minify_css(input_file):
-#     url = URL_minify_css
-#     data = {'input': open(input_file, 'rb').read()}
-#     return requests.post(url, data=data).text
+def minify_css(input_file):
+    url = URL_minify_css
+    data = {'input': open(input_file, 'rb').read()}
+    return requests.post(url, data=data).text
 
 
 for root, dirs, files in os.walk(input_dir, topdown=False):
@@ -58,10 +58,10 @@ for root, dirs, files in os.walk(input_dir, topdown=False):
         path = os.path.join(root, name)
         if name.endswith(".js"):
             print(os.path.join(root, name))
-            # minified_js = minify_js(os.path.join(root, name))          # minify javascript
-            # hexified_js = aschii2Hex(minified_js)                      # convert to hex
-            # write_to_file(name, hexified_js, os.path.join(root, name)) # write to file
-            # continue
+            minified_js = minify_js(os.path.join(root, name))          # minify javascript
+            hexified_js = aschii2Hex(minified_js)                      # convert to hex
+            write_to_file(name, hexified_js, os.path.join(root, name)) # write to file
+            continue
 
         elif name.endswith(".html"):
             print(os.path.join(root, name))
@@ -71,11 +71,11 @@ for root, dirs, files in os.walk(input_dir, topdown=False):
             write_to_file(name, hexified_html, os.path.join(root, name)) # write to file
             continue
 
-        # elif name.endswith(".css"):
-        #     print(os.path.join(root, name))
-        #     minified_css = minify_css(os.path.join(root, name))         # minify css
-        #     hexified_css = aschii2Hex(minified_css)                     # convet to hex
-        #     write_to_file(name, hexified_css, os.path.join(root, name)) # write to file
+        elif name.endswith(".css"):
+            print(os.path.join(root, name))
+            minified_css = minify_css(os.path.join(root, name))         # minify css
+            hexified_css = aschii2Hex(minified_css)                     # convet to hex
+            write_to_file(name, hexified_css, os.path.join(root, name)) # write to file
 
 
 
