@@ -1,0 +1,29 @@
+{
+    "name": "esp_socket",
+    "version": "0.0.1",
+    "description": "ESP Websocket Serial",
+    "keywords": "updates, firmware, http, https, esp32, esp32-s2, esp32-c3, esp32-s3",
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/RobertByrnes/esp_socket.git"
+    },
+    "authors":
+    [
+      {
+        "name": "Robert Byrnes",
+        "email": "robbyrnes@hotmail.co.uk",
+        "maintainer": true
+      }
+    ],
+    "license": "GPL-3.0-or-later",
+    "frameworks": "*",
+    "platforms": "espressif32, arduino",
+    "headers": ["ESPSocket.h", "TCallBattery.h"],
+    "examples": "examples/*/*",
+    "dependencies":
+    {
+        "me-no-dev/AsyncTCP": "1.0.0",
+        "me-no-dev/ESPAsyncWebServer": "https://github.com/me-no-dev/ESPAsyncWebServer.git#master"
+    }
+  }
