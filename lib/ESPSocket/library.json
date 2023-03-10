@@ -1,0 +1,21 @@
+{
+    "name": "ESPSocket",
+    "keywords": "ESPSocket, serial, monitor, ESP8266, ESP32, webpage, websocket, wireless",
+    "description": "ESPSocket is a webpage based Serial Monitor to log, monitor, or debug your code remotely.",
+    "repository":
+    {
+      "type": "git",
+      "url": ""
+    },
+    "authors":
+    [
+      {
+        "name": "Robert Byrnes",
+        "email": "robbyrnes@hotmail.co.uk",
+        "maintainer": true
+      }
+    ],
+    "version": "1.0.0",
+    "frameworks": "arduino",
+    "platforms": "espressif"
+  }
