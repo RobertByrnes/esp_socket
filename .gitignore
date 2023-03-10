@@ -1,0 +1,7 @@
+node_modules/
+.pio/
+.venv/
+.vscode/
+*.log
+*.txt
+include/config.h
