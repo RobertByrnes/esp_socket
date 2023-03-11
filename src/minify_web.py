@@ -25,7 +25,7 @@ def write_to_file(file, data, dir=""):
 
     # f_output.write("#define data_" + filename + "_len " + str(data.count('0x')) +"\n")
 
-def aschii2Hex(text): # TODO fix unkown byte at end of string
+def aschii2Hex(text):
     output_str = ""
     x = 1
     strLen = len(text)
@@ -35,6 +35,7 @@ def aschii2Hex(text): # TODO fix unkown byte at end of string
         if (x != strLen):
             output_str += ","
         x += 1
+    output_str = output_str[:-5] # fix for erroneous last group 0x3E
     return output_str
 
 def minify_js(input_file):
@@ -67,7 +68,7 @@ for root, dirs, files in os.walk(input_dir, topdown=False):
             print(os.path.join(root, name))
             minified_html = minify_html(os.path.join(root, name))        # minify html
             print(minified_html)
-            hexified_html = aschii2Hex(minified_html)                    # convert to hex
+            hexified_html = aschii2Hex(minified_html)                 # convert to hex
             write_to_file(name, hexified_html, os.path.join(root, name)) # write to file
             continue
 
