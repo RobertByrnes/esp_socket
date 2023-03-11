@@ -78,6 +78,5 @@ for root, dirs, files in os.walk(input_dir, topdown=False):
             write_to_file(name, hexified_css, os.path.join(root, name)) # write to file
 
 
-
 f_output.write("#endif\n\n")
 f_output.close()

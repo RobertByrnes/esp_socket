@@ -2,21 +2,22 @@
 #include "esp32_socket_webpage.h"
 #include "favicon.h"
 
-
 /* Default message callback of ESPSocket */
 void recvMsg(uint8_t *data, size_t len)
 {
-  ESPSocket.println("Received Data...");
-  String d = "";
-  for(int i=0; i < len; i++){
-    d += char(data[i]);
-  }
-  ESPSocket.println(d);
+    ESPSocket.println("Received Data...");
+    String d = "";
+    for (int i = 0; i < len; i++)
+    {
+        d += char(data[i]);
+    }
+    ESPSocket.println(d);
 }
 
-void ESPSocketClass::begin(AsyncWebServer *server, int defaultCallback, const char* url)
+void ESPSocketClass::begin(AsyncWebServer *server, int defaultCallback, const char *url)
 {
-    if (defaultCallback == 1) {
+    if (defaultCallback == 1)
+    {
         this->msgCallback(recvMsg);
     }
 
@@ -24,34 +25,32 @@ void ESPSocketClass::begin(AsyncWebServer *server, int defaultCallback, const ch
     _server = server;
     _ws = new AsyncWebSocket("/ws");
 
-    _server->on(_url, HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send_P(200, "text/html", data_index_html);    
-    });
+    _server->on(_url, HTTP_GET, [](AsyncWebServerRequest *request)
+                { request->send_P(200, "text/html", data_index_html); });
 
-    _server->on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request) {
-        request->send_P(200, "text/x-icon", favicon);    
-    });
+    _server->on("/favicon.ico", HTTP_GET, [](AsyncWebServerRequest *request)
+                { request->send_P(200, "text/x-icon", favicon); });
 
-    _server->on("/cdn-cgi/rum?", HTTP_POST, [](AsyncWebServerRequest *request) {
-        request->send(200);
-    });
+    _server->on("/cdn-cgi/rum?", HTTP_POST, [](AsyncWebServerRequest *request)
+                { request->send(200); });
 
-    _ws->onEvent([&](AsyncWebSocket * server, AsyncWebSocketClient * client, AwsEventType type, void * arg, uint8_t *data, size_t len) -> void {
+    _ws->onEvent([&](AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type, void *arg, uint8_t *data, size_t len) -> void
+                 {
         switch (type) {
             case WS_EVT_CONNECT:
-                #if defined(DEBUG_ESP_SOCKET)
+#if defined(DEBUG_ESP_SOCKET)
                     Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
-                #endif
+#endif
                 break;
             case WS_EVT_DISCONNECT:
-                #if defined(DEBUG_ESP_SOCKET)
+#if defined(DEBUG_ESP_SOCKET)
                     Serial.printf("WebSocket client #%u disconnected\n", client->id());
-                #endif
+#endif
                 break;
             case WS_EVT_DATA:
-                #if defined(DEBUG_ESP_SOCKET)
+#if defined(DEBUG_ESP_SOCKET)
                     debugSocket("Received Websocket Data");
-                #endif
+#endif
                 if (_RecvFunc != NULL) {
                     _RecvFunc(data, len);
                 }
@@ -59,18 +58,17 @@ void ESPSocketClass::begin(AsyncWebServer *server, int defaultCallback, const ch
             case WS_EVT_PONG:
             case WS_EVT_ERROR:
             default:
-                #if defined(DEBUG_ESP_SOCKET)
+#if defined(DEBUG_ESP_SOCKET)
                     debugSocket("Websocket Error");
-                #endif
+#endif
         }
-        _ws->cleanupClients();
-    });
+        _ws->cleanupClients(); });
 
     _server->addHandler(_ws);
 
-    #if defined(DEBUG_ESP_SOCKET)
-        debugSocket("Attached AsyncWebServer along with Websockets");
-    #endif
+#if defined(DEBUG_ESP_SOCKET)
+    debugSocket("Attached AsyncWebServer along with Websockets");
+#endif
 }
 
 void ESPSocketClass::msgCallback(RecvMsgHandler _recv)
@@ -125,47 +123,47 @@ void ESPSocketClass::print(float m)
 
 void ESPSocketClass::println(String m)
 {
-    _ws->textAll(m+"\n");        
+    _ws->textAll(m + "\n");
 }
 
 void ESPSocketClass::println(const char *m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 void ESPSocketClass::println(char *m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 void ESPSocketClass::println(int m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 void ESPSocketClass::println(uint8_t m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 void ESPSocketClass::println(uint16_t m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 void ESPSocketClass::println(uint32_t m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 void ESPSocketClass::println(float m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 void ESPSocketClass::println(double m)
 {
-    _ws->textAll(String(m)+"\n");
+    _ws->textAll(String(m) + "\n");
 }
 
 size_t ESPSocketClass::printf(const char *format, ...)
@@ -178,22 +176,26 @@ size_t ESPSocketClass::printf(const char *format, ...)
     va_copy(copy, arg);
     int len = vsnprintf(temp, sizeof(loc_buf), format, copy);
     va_end(copy);
-    if(len < 0) {
+    if (len < 0)
+    {
         va_end(arg);
         return 0;
     };
-    if(len >= sizeof(loc_buf)){
-        temp = (char*) malloc(len+1);
-        if(temp == NULL) {
+    if (len >= sizeof(loc_buf))
+    {
+        temp = (char *)malloc(len + 1);
+        if (temp == NULL)
+        {
             va_end(arg);
             return 0;
         }
-        len = vsnprintf(temp, len+1, format, arg);
+        len = vsnprintf(temp, len + 1, format, arg);
     }
     va_end(arg);
-    _ws->textAll(String(temp)+"\n");
+    _ws->textAll(String(temp) + "\n");
     // len = write((uint8_t*)temp, len);
-    if(temp != loc_buf){
+    if (temp != loc_buf)
+    {
         free(temp);
     }
     return len;
@@ -201,46 +203,43 @@ size_t ESPSocketClass::printf(const char *format, ...)
 
 void ESPSocketClass::printBatteryInfo(TCallBattery &battery)
 {
-  this->print(
-    "[:BATT:]Battery Charge: " + 
-    String(battery.getPercentage()) + 
-    "%, Battery Voltage: "+ 
-    String(battery.getSampledVoltage()) + 
-    "VDc\n"
-  );
+    this->print(
+        "[:BATT:] Charge: " +
+        String(battery.getPercentage()) +
+        "%, Voltage: " +
+        String(battery.getSampledVoltage()) +
+        "VDc\n");
 }
 
 void ESPSocketClass::printWiFiInfo()
 {
-  this->print(
-    "[:WIFI:]Network RSSI: " + 
-    String(WiFi.RSSI()) + 
-    "dBm, Host: " +  
-    WiFi.getHostname() + 
-    ", Gateway: " +  
-    String(WiFi.gatewayIP()) + 
-    "\n"
-  );  
+    this->print(
+        "[:WIFI:]RSSI: " +
+        String(WiFi.RSSI()) +
+        "dBm, Host: " +
+        WiFi.getHostname() +
+        ", Gateway: " +
+        String(WiFi.gatewayIP()) +
+        "\n");
 }
 
 void ESPSocketClass::printESPInfo()
 {
-  this->print(
-    "[:ESP:]ESP Model: " + 
-    String(ESPSocket._chipModel) + 
-    ", Rev: " + 
-    ESPSocket._chipRevision + 
-    ", Freq: " + 
-    ESPSocket._cpuFreq + 
-    "MHz\n"
-  );
+    this->print(
+        "[:ESP:]Model: " +
+        String(ESPSocket._chipModel) +
+        ", Rev: " +
+        ESPSocket._chipRevision +
+        ", Freq: " +
+        ESPSocket._cpuFreq +
+        "MHz\n");
 }
 
 #ifdef DEBUG_ESP_SOCKET
-    void ESPSocketClass::debugSocket(const char* message)
-    {
-        Serial.printf("[ESP Socket] %s\n", message);
-    }
+void ESPSocketClass::debugSocket(const char *message)
+{
+    Serial.printf("[ESP Socket] %s\n", message);
+}
 #endif
 
 ESPSocketClass ESPSocket;

@@ -11,15 +11,15 @@
 #include <string.h>
 
 #if defined(ESP8266)
-    #define HARDWARE "ESP8266"
-    #include "ESP8266WiFi.h"
-    #include "ESPAsyncTCP.h"
-    #include "ESPAsyncWebServer.h"
+#define HARDWARE "ESP8266"
+#include "ESP8266WiFi.h"
+#include "ESPAsyncTCP.h"
+#include "ESPAsyncWebServer.h"
 #elif defined(ESP32)
-    #define HARDWARE "ESP32"
-    #include "WiFi.h"
-    #include "AsyncTCP.h"
-    #include "ESPAsyncWebServer.h"
+#define HARDWARE "ESP32"
+#include "WiFi.h"
+#include "AsyncTCP.h"
+#include "ESPAsyncWebServer.h"
 #endif
 
 #define DEBUG_ESP_SOCKET 1
@@ -27,13 +27,14 @@
 
 typedef std::function<void(uint8_t *data, size_t len)> RecvMsgHandler;
 
-class ESPSocketClass {
+class ESPSocketClass
+{
 public:
     const char *_chipModel = ESP.getChipModel();
     uint32_t _cpuFreq = ESP.getCpuFreqMHz();
     uint32_t _chipRevision = ESP.getChipRevision();
 
-    void begin(AsyncWebServer *server, int defaultCallback=0, const char* url = "/esp");
+    void begin(AsyncWebServer *server, int defaultCallback = 0, const char *url = "/esp");
     void msgCallback(RecvMsgHandler _recv);
     void printBatteryInfo(TCallBattery &battery);
     void printWiFiInfo();
@@ -61,15 +62,16 @@ public:
     void println(double m);
     // Print formatted string with arguments
     size_t printf(const char *format, ...);
+
 private:
     const char *_url;
     AsyncWebServer *_server;
     AsyncWebSocket *_ws;
     RecvMsgHandler _RecvFunc = NULL;
 
-    #ifdef DEBUG_ESP_SOCKET 
-        void debugSocket(const char* message);
-    #endif
+#ifdef DEBUG_ESP_SOCKET
+    void debugSocket(const char *message);
+#endif
 };
 
 extern ESPSocketClass ESPSocket;
