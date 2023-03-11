@@ -12,6 +12,60 @@
 TCallBattery battery;
 AsyncWebServer server(80);
 
+std::string ESP_REBOOT = "reboot";
+std::string ESP_UPDATE = "update";
+std::string ESP_PROVISION = "provision";
+
+bool restart = false;
+
+void update()
+{
+  // implement wifi update function
+}
+
+void provision()
+{
+  // implement provisioning function
+}
+
+void onMsgHandler(uint8_t *data, size_t len)
+{
+  ESPSocket.print("[");
+  ESPSocket.print((int)millis());
+  ESPSocket.print("] ");
+
+  std::string action = "";
+  for (int i = 0; i < len; i++)
+  {
+    action += char(data[i]);
+  }
+
+  // ESPSocket.println(action.c_str());
+
+  if (action == ESP_REBOOT)
+  {
+    ESPSocket.println("Rebooting in 5 seconds, this page will reload...");
+    ESPSocket.println("[:RELOAD:]");
+    restart = true;
+    return;
+  }
+
+  if (action == ESP_UPDATE)
+  {
+    ESPSocket.println("Processing update signal...");
+    update();
+    return;
+  }
+
+  if (action == ESP_PROVISION)
+  {
+    ESPSocket.println("Provisioning...");
+    provision();
+    return;
+  }
+
+  ESPSocket.println("Invalid message...");
+}
 
 void setup()
 {
@@ -20,17 +74,19 @@ void setup()
   WiFi.mode(WIFI_STA);
 
   WiFi.begin(AP_SSID, AP_PASS);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(1000);
     Serial.println("Connecting to WiFi..");
   }
-  
+
   Serial.println(WiFi.localIP());
 
-  ESPSocket.begin(&server, DEFAULT_CALLBACK);
-  
+  ESPSocket.msgCallback(onMsgHandler);
+  ESPSocket.begin(&server);
+
   server.begin();
-  
+
   Serial.println("ESP Socket OK");
 }
 
@@ -40,4 +96,9 @@ void loop()
   ESPSocket.printWiFiInfo();
   ESPSocket.printESPInfo();
   delay(DELAY_TIME);
+
+  if (restart == true)
+  {
+    ESP.restart();
+  }
 }

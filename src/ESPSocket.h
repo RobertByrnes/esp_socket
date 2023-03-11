@@ -5,7 +5,6 @@
 #include "stdlib_noniso.h"
 #include <functional>
 #include <TCallBattery.h>
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,8 +36,8 @@ public:
     void begin(AsyncWebServer *server, int defaultCallback = 0, const char *url = "/esp");
     void msgCallback(RecvMsgHandler _recv);
     void printBatteryInfo(TCallBattery &battery);
-    void printWiFiInfo();
-    void printESPInfo();
+    void printWiFiInfo(bool verbose = false);
+    void printESPInfo(bool verbose = false);
 
     // Print
     void print(String m = "");

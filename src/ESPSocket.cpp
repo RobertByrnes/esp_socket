@@ -2,7 +2,12 @@
 #include "esp32_socket_webpage.h"
 #include "favicon.h"
 
-/* Default message callback of ESPSocket */
+/**
+ * @brief Default message callback of ESPSocket.
+ *
+ * @param data uint8_t *
+ * @param len size_t
+ */
 void recvMsg(uint8_t *data, size_t len)
 {
     ESPSocket.println("Received Data...");
@@ -39,17 +44,17 @@ void ESPSocketClass::begin(AsyncWebServer *server, int defaultCallback, const ch
         switch (type) {
             case WS_EVT_CONNECT:
 #if defined(DEBUG_ESP_SOCKET)
-                    Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
+                Serial.printf("WebSocket client #%u connected from %s\n", client->id(), client->remoteIP().toString().c_str());
 #endif
                 break;
             case WS_EVT_DISCONNECT:
 #if defined(DEBUG_ESP_SOCKET)
-                    Serial.printf("WebSocket client #%u disconnected\n", client->id());
+                Serial.printf("WebSocket client #%u disconnected\n", client->id());
 #endif
                 break;
             case WS_EVT_DATA:
 #if defined(DEBUG_ESP_SOCKET)
-                    debugSocket("Received Websocket Data");
+                debugSocket("Received Websocket Data");
 #endif
                 if (_RecvFunc != NULL) {
                     _RecvFunc(data, len);
@@ -59,7 +64,7 @@ void ESPSocketClass::begin(AsyncWebServer *server, int defaultCallback, const ch
             case WS_EVT_ERROR:
             default:
 #if defined(DEBUG_ESP_SOCKET)
-                    debugSocket("Websocket Error");
+                debugSocket("Websocket Error");
 #endif
         }
         _ws->cleanupClients(); });
@@ -211,28 +216,52 @@ void ESPSocketClass::printBatteryInfo(TCallBattery &battery)
         "VDc\n");
 }
 
-void ESPSocketClass::printWiFiInfo()
+void ESPSocketClass::printWiFiInfo(bool verbose)
 {
-    this->print(
-        "[:WIFI:]RSSI: " +
-        String(WiFi.RSSI()) +
-        "dBm, Host: " +
-        WiFi.getHostname() +
-        ", Gateway: " +
-        String(WiFi.gatewayIP()) +
-        "\n");
+    if (verbose)
+    {
+        this->print(
+            "[:WIFI:]RSSI: " +
+            String(WiFi.RSSI()) +
+            "dBm, Host: " +
+            WiFi.getHostname() +
+            ", Gateway: " +
+            String(WiFi.gatewayIP()) +
+            "\n");
+    }
+    else
+    {
+        this->print(
+            "[:WIFI:]RSSI: " +
+            String(WiFi.RSSI()) +
+            "\n");
+    }
 }
 
-void ESPSocketClass::printESPInfo()
+void ESPSocketClass::printESPInfo(bool verbose)
 {
-    this->print(
-        "[:ESP:]Model: " +
-        String(ESPSocket._chipModel) +
-        ", Rev: " +
-        ESPSocket._chipRevision +
-        ", Freq: " +
-        ESPSocket._cpuFreq +
-        "MHz\n");
+    if (verbose)
+    {
+        this->print(
+            "[:ESP:]Model: " +
+            String(ESPSocket._chipModel) +
+            ", Rev: " +
+            ESPSocket._chipRevision +
+            ", Freq: " +
+            ESPSocket._cpuFreq +
+            "MHz\n");
+    }
+    else
+    {
+        this->print(
+            "[:ESP:]Model: " +
+            String(ESPSocket._chipModel) +
+            ", " +
+            ESPSocket._chipRevision +
+            ", " +
+            ESPSocket._cpuFreq +
+            "MHz\n");
+    }
 }
 
 #ifdef DEBUG_ESP_SOCKET
