@@ -5,3 +5,4 @@ node_modules/
 *.log
 *.txt
 include/config.h
+src/main.cpp
