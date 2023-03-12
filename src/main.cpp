@@ -4,8 +4,8 @@
 #include <ESPSocket.h>
 #include <TCallBattery.h>
 
-#define AP_SSID "CrowdedHouse"
-#define AP_PASS "kF4QMhzc3xcS"
+#define AP_SSID "ssid"
+#define AP_PASS "password"
 #define LED_PIN 13
 #define DELAY_TIME 5000
 
