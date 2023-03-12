@@ -21,9 +21,13 @@
 #include "ESPAsyncWebServer.h"
 #endif
 
-#define DEBUG_ESP_SOCKET 1
-#define DEFAULT_CALLBACK 1
-
+/**
+ * @brief Message handler function typedef for socket events.
+ * To be passed into ESPSocketClass using msgCallback
+ * method and before calling the begin method.
+ *
+ * @typedef RecvMsgHandler
+ */
 typedef std::function<void(uint8_t *data, size_t len)> RecvMsgHandler;
 
 class ESPSocketClass
@@ -67,10 +71,6 @@ private:
     AsyncWebServer *_server;
     AsyncWebSocket *_ws;
     RecvMsgHandler _RecvFunc = NULL;
-
-#ifdef DEBUG_ESP_SOCKET
-    void debugSocket(const char *message);
-#endif
 };
 
 extern ESPSocketClass ESPSocket;
