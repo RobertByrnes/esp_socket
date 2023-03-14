@@ -1,10 +1,36 @@
-# PlatformIO C++ ESP32 Arduino Example - README
+<h1 align="center">ESP SOCKET</h1>
+
+<p align="center">
+
+<img src="https://img.shields.io/badge/made%20by-RobertByrnes-blue.svg" >
+
+<!-- <img src="https://img.shields.io/npm/v/vue2-baremetrics-calendar">
+
+<img src="https://img.shields.io/badge/vue-2.6.10-green.svg"> -->
+
+<!-- <img src="https://badges.frapsoft.com/os/v1/open-source.svg?v=103" >
+
+<img src="https://img.shields.io/github/stars/silent-lad/Vue2BaremetricsCalendar.svg?style=flat">
+
+<img src="https://img.shields.io/github/languages/top/silent-lad/Vue2BaremetricsCalendar.svg">
+
+<img src="https://img.shields.io/github/issues/silent-lad/Vue2BaremetricsCalendar.svg"> -->
+
+<img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat">
+
+</p>
+
+![esp socket ui](esp_socket.jpg?raw=true)
+
 ## Introduction
 This is a code snippet written in C++ for the ESP32 Arduino, using the PlatformIO development environment. The code creates an instance of AsyncWebSocket and waits for connection requests. When a Websocket connection is established to /url, the ESP8266 will receive and send data.
 
-## Prerequisites
-To run this code, you will need the following:
+## Installation
+You can install ESP SOCKET in your test files via the PlatformIO library manager. Simply search for "ESP SOCKET" and click "Add to Project". Alternatively, you can add the following line to your platformio.ini file:
 
+```ini
+lib_deps = digitaldragon/ESPSOCKET@^0.0.5
+```
 ## ESP32 device
 An installation of Arduino IDE (or any other compatible IDE)
 PlatformIO plugin for your IDE
