@@ -1,3 +1,16 @@
+/**
+ * The following code initializes the WiFi connection, creates an ESPSocket object with message handling
+ * function and starts the server on port 80:
+ *
+ * When a message is received by the server, the function onMsgHandler is called which performs
+ * different actions based on the content of the message. If the message equals "reboot",
+ * the device will reboot after 5 seconds and reload the webpage. Note that you need to
+ * add the required libraries and header files to your project. You can check
+ * the documentation of the TCallBattery and ESPSocket classes to learn
+ * more about their capabilities and functions.
+ * 
+ */
+
 // #define DEBUG_ESP_SOCKET
 
 #include <Arduino.h>
@@ -6,8 +19,8 @@
 #include <ESPSocket.h>
 #include <TCallBattery.h>
 
-#define AP_SSID "ssid"
-#define AP_PASS "password"
+#define AP_SSID "SSID"
+#define AP_PASS "PASSWORD"
 #define LED_PIN 13
 #define DELAY_TIME 5000
 

@@ -1,0 +1,19 @@
+{
+  "name": "esp32_web_builder",
+  "version": "1.0.0",
+  "description": "This is a code snippet written in C++ for the ESP32 Arduino, using the PlatformIO development environment. The code creates an instance of AsyncWebSocket and waits for connection requests. When a Websocket connection is established to /url, the ESP8266 will receive and send data.",
+  "main": "ws_server.js",
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ws": "^8.13.0"
+  }
+}
