@@ -19,14 +19,15 @@
 #include <ESPSocket.h>
 #include <TCallBattery.h>
 
-#define AP_SSID "SSID"
-#define AP_PASS "PASSWORD"
+#define AP_SSID "CrowdedHouse"
+#define AP_PASS "kF4QMhzc3xcS"
 #define LED_PIN 13
 #define DELAY_TIME 5000
 
 TCallBattery battery;
 AsyncWebServer server(80);
 
+std::string ESP_RUNTIME = "runtime";
 std::string ESP_REBOOT = "reboot";
 std::string ESP_UPDATE = "update";
 std::string ESP_PROVISION = "provision";
@@ -52,6 +53,11 @@ void onMsgHandler(uint8_t *data, size_t len) {
   }
 
   // ESPSocket.println(action.c_str());
+
+  if (action == ESP_RUNTIME) {
+    ESPSocket.printf("ESP up for %u", millis());
+    return;
+  }
 
   if (action == ESP_REBOOT) {
     ESPSocket.println("Rebooting in 5 seconds, this page will reload...");
@@ -87,8 +93,7 @@ void setup() {
   }
 
   Serial.println(WiFi.localIP());
-  pinMode(13, OUTPUT);
-  digitalWrite(13, HIGH);
+
   ESPSocket.msgCallback(onMsgHandler);
   ESPSocket.begin(&server);
 
@@ -101,7 +106,6 @@ void loop() {
   ESPSocket.printBatteryInfo(battery);
   ESPSocket.printWiFiInfo();
   ESPSocket.printESPInfo();
-  ESPSocket.printf("Runtime: %u", millis());
   delay(DELAY_TIME);
 
   if (restart == true) {
