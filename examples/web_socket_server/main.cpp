@@ -87,7 +87,8 @@ void setup() {
   }
 
   Serial.println(WiFi.localIP());
-
+  pinMode(13, OUTPUT);
+  digitalWrite(13, HIGH);
   ESPSocket.msgCallback(onMsgHandler);
   ESPSocket.begin(&server);
 
