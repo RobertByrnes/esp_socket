@@ -1,3 +1,4 @@
+#ifdef ESP32
 #ifndef T_CALL_BATTERY_H
 #define T_CALL_BATTERY_H
 
@@ -47,3 +48,4 @@ private:
 };
 
 #endif
+#endif // ESP32

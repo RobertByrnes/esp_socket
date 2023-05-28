@@ -33,13 +33,15 @@ typedef std::function<void(uint8_t *data, size_t len)> RecvMsgHandler;
 class ESPSocketClass
 {
 public:
+    #ifdef ESP32
     const char *_chipModel = ESP.getChipModel();
-    uint32_t _cpuFreq = ESP.getCpuFreqMHz();
     uint32_t _chipRevision = ESP.getChipRevision();
+    void printBatteryInfo(TCallBattery &battery);
+    #endif
+    uint32_t _cpuFreq = ESP.getCpuFreqMHz();
 
     void begin(AsyncWebServer *server, int defaultCallback = 0, const char *url = "/esp");
     void msgCallback(RecvMsgHandler _recv);
-    void printBatteryInfo(TCallBattery &battery);
     void printWiFiInfo(bool verbose = false);
     void printESPInfo(bool verbose = false);
 

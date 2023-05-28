@@ -199,6 +199,7 @@ size_t ESPSocketClass::printf(const char *format, ...) {
     return len;
 }
 
+#ifdef ESP32
 /**
  * @brief Print battery charge percentage and battery voltage
  * for the TTGO T-Call ESP32 and other supported boards. 
@@ -213,6 +214,7 @@ void ESPSocketClass::printBatteryInfo(TCallBattery &battery) {
         String(battery.getSampledVoltage()) +
         "VDc\n");
 }
+#endif
 
 /**
  * @brief Print WiFi RSSI, host and gateway to the web socket.
@@ -227,7 +229,7 @@ void ESPSocketClass::printWiFiInfo(bool verbose) {
             "dBm, Host: " +
             WiFi.getHostname() +
             ", Gateway: " +
-            String(WiFi.gatewayIP()) +
+            String(WiFi.gatewayIP().toString()) +
             "\n");
     } else {
         this->print(
@@ -237,6 +239,7 @@ void ESPSocketClass::printWiFiInfo(bool verbose) {
     }
 }
 
+#ifdef ESP32
 /**
  * @brief Print chip information for ESP32.
  * 
@@ -263,5 +266,6 @@ void ESPSocketClass::printESPInfo(bool verbose) {
             "MHz\n");
     }
 }
+#endif
 
 ESPSocketClass ESPSocket;

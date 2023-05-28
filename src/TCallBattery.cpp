@@ -1,3 +1,4 @@
+#ifdef ESP32
 #include "TCallBattery.h"
 #include <Arduino.h>
 
@@ -80,3 +81,5 @@ float TCallBattery::roundoff(float value, unsigned char prec)
   float pow_10 = std::pow(10.0f, (float)prec);
   return std::round(value * pow_10) / pow_10;
 }
+
+#endif // ESP32
