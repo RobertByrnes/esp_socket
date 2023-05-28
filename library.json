@@ -1,6 +1,6 @@
 {
     "name": "ESPSOCKET",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "ESP Websocket Serial",
     "keywords": "updates, firmware, http, https, esp32, esp32-s2, esp32-c3, esp32-s3",
     "repository":
