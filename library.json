@@ -1,7 +1,7 @@
 {
     "name": "ESPSOCKET",
-    "version": "0.0.7",
-    "description": "ESP Websocket Serial",
+    "version": "0.0.8",
+    "description": "ESP Websocket Serial: When a Websocket connection is established to /esp, the ESP32 / ESP8266 will receive and send data",
     "keywords": "updates, firmware, http, https, esp32, esp32-s2, esp32-c3, esp32-s3",
     "repository":
     {

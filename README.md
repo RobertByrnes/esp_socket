@@ -23,7 +23,7 @@
 ![esp socket ui](esp_socket.jpg?raw=true)
 
 ## Introduction
-This is a code snippet written in C++ for the ESP32 Arduino, using the PlatformIO development environment. The code creates an instance of AsyncWebSocket and waits for connection requests. When a Websocket connection is established to /url, the ESP8266 will receive and send data.
+This is a package written in C++ for the ESP32 Arduino, using the PlatformIO development environment. The code creates an instance of AsyncWebSocket and waits for connection requests. When a Websocket connection is established to /esp, the ESP32 / ESP8266 will receive and send data.
 
 ## Installation
 You can install ESP SOCKET in your test files via the PlatformIO library manager. Simply search for "ESP SOCKET" and click "Add to Project". Alternatively, you can add the following line to your platformio.ini file:
