@@ -6,3 +6,5 @@ node_modules/
 *.txt
 include/config.h
 src/main.cpp
+mockgen.py
+testgen.py

@@ -1,4 +1,3 @@
-#ifdef ESP32
 #include "TCallBattery.h"
 #include <Arduino.h>
 
@@ -10,6 +9,7 @@ TCallBattery::~TCallBattery() {}
 
 void TCallBattery::initBatteryMonitor()
 {
+    #ifdef ESP32
     esp_adc_cal_characteristics_t adc_chars;
     esp_adc_cal_value_t val_type = esp_adc_cal_characterize(
         (adc_unit_t)ADC_UNIT_1, 
@@ -18,6 +18,7 @@ void TCallBattery::initBatteryMonitor()
         1100, 
         &adc_chars
     );
+    #endif // ESP32
     pinMode(VOLTAGE_DIVIDER_PIN, OUTPUT);
 }
 
@@ -79,7 +80,5 @@ void TCallBattery::resetUnits()
 float TCallBattery::roundoff(float value, unsigned char prec)
 {
   float pow_10 = std::pow(10.0f, (float)prec);
-  return std::round(value * pow_10) / pow_10;
+  return round(value * pow_10) / pow_10;
 }
-
-#endif // ESP32

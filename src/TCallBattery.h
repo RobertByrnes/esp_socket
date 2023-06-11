@@ -1,9 +1,11 @@
-#ifdef ESP32
 #ifndef T_CALL_BATTERY_H
 #define T_CALL_BATTERY_H
 
+#ifdef ESP32
 #include <driver/adc.h>
 #include "esp_adc_cal.h"
+#endif // ESP32
+
 #include <vector>
 #include <tuple>
 #include <math.h>
@@ -47,5 +49,4 @@ private:
     float roundoff(float value, unsigned char prec);
 };
 
-#endif
-#endif // ESP32
+#endif // T_CALL_BATTERY_H
